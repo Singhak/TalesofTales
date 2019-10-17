@@ -1,0 +1,16 @@
+<section class="cta-section theme-bg-light py-5">
+    <div class="container text-center">
+        <h2 class="heading">Tales of Tales - A Blog for Poetry and Story Lovers</h2>
+        <div class="intro">{{content}}</div>
+        <form class="signup-form form-inline justify-content-center pt-3" #subscriber="ngForm"
+            (ngSubmit)="onSubscribe(subscriber.value)">
+            <div class="form-group">
+                <label class="sr-only" for="semail">Your email</label>
+                <input type="email" id="mail" name="mail" class="form-control mr-md-1 semail" placeholder="Enter email"
+                    ngModel email>
+            </div>
+            <button type="submit" class="btn btn-primary" [disabled]="!subscriber.valid || !subscriber.value.mail"
+                data-toggle="modal" href="#ignismyModal">Subscribe</button>
+        </form>
+    </div>
+</section>

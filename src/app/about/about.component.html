@@ -1,0 +1,6 @@
+<app-subscribe [content]="about.info"></app-subscribe>
+<div class="row center">
+    <div class="col-xs-6 col-sm-4 col-md-4 col-lg-4" *ngFor="let author of about.authors">
+        <app-team-member [author]="author"></app-team-member>
+    </div>
+</div>

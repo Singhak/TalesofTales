@@ -1,0 +1,15 @@
+<app-subscribe></app-subscribe>
+<section class="blog-list px-3 py-5 p-md-5">
+    <div class="container" style="text-align: center">
+        <app-loading *ngIf=" !posts || posts.length === 0"></app-loading>
+        <div class="item mb-5" *ngFor="let post of posts">
+            <app-post-item [post]="post"></app-post-item>
+        </div>
+        <nav class="blog-nav nav nav-justified my-5">
+            <button [disabled]="disablePrev || !paginationClickedCount" class="nav-link-prev nav-item nav-link"
+                (click)="prev()">Previous</button>
+            <button [disabled]="disableNext" class="nav-link-next nav-item nav-link" (click)="next()">Next</button>
+        </nav>
+
+    </div>
+</section>

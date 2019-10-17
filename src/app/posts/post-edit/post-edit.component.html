@@ -1,0 +1,50 @@
+<div class="container">
+    <form #postform="ngForm" (ngSubmit)="onSubmit(postform)">
+        <div class="row">
+            <div class="col-xs-6">
+                <h3>Edit Post</h3>
+            </div>
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-primary pull-right">Save</button>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <span class="label">Title</span>
+                <input type="text" name="title" id="inputtitle" class="form-control" title="Post title" ngModel>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <span class="label">Sub Title</span>
+                <input type="text" name="subtitle" id="inputtitle" class="form-control" title="Post sub title" ngModel>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <span class="label">Category</span>
+                <input type="text" name="category" id="inputcategory" class="form-control" title="Post Category" ngModel>
+            </div>
+            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                <span class="label">Author</span>
+                <input type="text" name="author" id="inputauthor" class="form-control" title="Author" ngModel>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <span class="label">Image Path</span>
+                <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel>
+            </div>
+        </div>
+    </form>
+    <form novalidate>
+        <br>
+        <div class="editor">
+            <angular-markdown-editor textareaId="editor1" [options]="editorOptions" rows="12" name="markdownText"
+                [(ngModel)]="markdownText" (onFullscreenExit)="hidePreview()">
+            </angular-markdown-editor>
+        </div>
+    </form>
+    <hr />
+    <h3 class="text-success bold">Content Preview</h3>
+    <div *ngIf="markdownText" class="result-preview">
+        <markdown [data]="markdownText"></markdown>
+    </div>
+</div>

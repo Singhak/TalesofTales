@@ -1,0 +1,56 @@
+<!-- Modal -->
+<div class="modal fade" id="darkModalForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog form-dark" role="document">
+        <button type="button" class="close white-text" style="color: white" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <!--Content-->
+        <div class="modal-content card card-image img"
+            style="background-image: url('../../assets/images/defaults/default.jpg');">
+            <div class="text-white rgba-stylish-strong py-5 px-5 z-depth-4">
+                <!--Header-->
+                <div class="modal-header text-center pb-4">
+                    <h3 class="modal-title w-100 white-text font-weight-bold" style="color: white;" id="myModalLabel">
+                        <strong>LOG IN</strong></h3>
+
+                </div>
+                <!--Body-->
+                <div class="modal-body">
+                    <!--Body-->
+                    <div class="md-form mb-3">
+                        <button [disabled]="!accepted" class="btn btn-block btn-twitter" (click)="signInWithTwitter()"
+                            data-toggle="modal" data-target="#darkModalForm">
+                            <span class="fab fa-twitter"></span>
+                            Sign in with Twitter
+                        </button>
+                    </div>
+                    <div class="md-form mb-3">
+                        <button [disabled]="!accepted" class="btn btn-block btn-google" (click)="signInWithGoogle()"
+                            data-toggle="modal" data-target="#darkModalForm">
+                            <span class="fab fa-google"></span>
+                            Sign in with Twitter
+                        </button>
+                    </div>
+
+                    <div class="md-form mb-3">
+                        <button [disabled]="!accepted" class="btn btn-block btn-facebook" (click)="signInWithFacebook()"
+                            data-toggle="modal" data-target="#darkModalForm">
+                            <span class="fab fa-facebook"></span>
+                            Sign in with Twitter
+                        </button>
+                        <div class="form-group mt-4">
+                            <input class="form-check-input" type="checkbox" id="checkbox624" [(ngModel)]="accepted">
+                            <label for="checkbox624" class="white-text form-check-label">Accept the<a href="#"
+                                    class="green-text font-weight-bold">
+                                    Terms and Conditions</a></label>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!--/.Content-->
+    </div>
+</div>
+<!-- Modal -->

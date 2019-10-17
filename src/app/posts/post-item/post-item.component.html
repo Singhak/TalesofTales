@@ -1,0 +1,15 @@
+<div class="media">
+    <img class="mr-3 img-fluid post-thumb d-none d-md-flex" [defaultImage]="home.logo"
+        style="height: 100px; width: 100px;" [lazyLoad]="post.imgPath" alt="image">
+    <div class="media-body">
+        <h3 class="title mb-1"><a routerLink="{{post.id}}">{{post.title}}</a></h3>
+        <div class="meta mb-1"><span class="date">{{post.postDate | date}}</span><span
+                class="time">{{time_to_read(post.content, post.category)}}</span><span class="comment"><a
+                    href="{{post.social}}">{{post.author}}
+                </a></span></div>
+        <div class="intro">{{post.content | trimText}}</div>
+        <a class="more-link" routerLink="{{post.id}}">Read more &rarr;</a>
+    </div>
+    <!--//media-body-->
+</div>
+<!--//media-->

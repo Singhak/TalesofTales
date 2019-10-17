@@ -1,0 +1,65 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5 col-xl-5">
+      <div class="header">
+        <!-- site title -->
+        <header class="box">
+          <a class="js-site-title">
+            <h1 class="box-text site-title-text">Tales of Tales</h1>
+          </a>
+        </header>
+
+        <!-- site navigation -->
+        <nav class="js-nav">
+          <ul class="nav-items-container">
+            <li data-nav-item-id="gallery"
+              class="block-keep-ratio block-keep-ratio-1-1 block-width-half box box-white box-nav-item js-nav-item pull-xs-right">
+              <a routerLink="gallery" class="block-keep-ratio-content box-nav-item-link">
+                <span class="box-text box-text-nav-item flexbox-center">Gallery</span>
+              </a>
+            </li>
+
+            <li data-nav-item-id="blogs"
+              class="block-keep-ratio block-keep-ratio-1-1 block-width-half box box-white box-nav-item js-nav-item pull-xs-left">
+              <a class="block-keep-ratio-content box-nav-item-link">
+                <span class="box-text box-text-nav-item flexbox-center">Blogs</span>
+              </a>
+            </li>
+            <li data-nav-item-id="about"
+              class="block-keep-ratio block-keep-ratio-1-1 block-width-half box box-white box-nav-item js-nav-item pull-xs-left">
+              <a routerLink="about" class="block-keep-ratio-content box-nav-item-link">
+                <span class="box-text box-text-nav-item flexbox-center">About</span>
+              </a>
+            </li>
+            <li data-nav-item-id="page-4"
+              class="block-keep-ratio block-keep-ratio-1-1 block-width-half box box-white box-nav-item js-nav-item pull-xs-right">
+              <a routerLink="contact" class="block-keep-ratio-content box-nav-item-link">
+                <span class="box-text box-text-nav-item flexbox-center">Contact Us</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </div> <!-- .header -->
+
+    </div>
+
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7 col-xl-7">
+      <div class="content-wrapper js-content-wrapper">
+
+        <router-outlet></router-outlet>
+        <!-- about -->
+      </div>
+    </div>
+
+  </div>
+  <!-- <app-thankyou></app-thankyou> -->
+  <!-- footer row -->
+  <footer class="row footer js-footer">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+
+      <p class="copyright-text">Copyright &copy; 2016 Company Name</p>
+
+    </div>
+  </footer>
+
+</div> <!-- .container-fluid -->

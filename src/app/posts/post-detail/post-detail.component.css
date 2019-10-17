@@ -1,0 +1,7 @@
+.blog-post-body p {
+    /* font-family: 'Telegraphem', Menlo, Monaco, Consolas, "Courier New", monospace; */
+    font-family: Menlo, Monaco, Consolas, "Courier New", monospace;
+    font-weight: normal;
+    font-style: normal;
+    color: royalblue;
+}

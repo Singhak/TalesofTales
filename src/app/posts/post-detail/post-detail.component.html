@@ -1,0 +1,60 @@
+<div style="text-align: center;">
+    <app-loading *ngIf="!post"></app-loading>
+</div>
+<div>
+    <article class="blog-post px-3 py-5 p-md-5" *ngIf="post">
+        <div class="container">
+            <header class="blog-post-header">
+                <h2 class="title mb-2">{{post.title}}</h2>
+                <div class="meta mb-3"><span class="date">{{post.postDate | date}}</span><span
+                        class="time">{{minute_to_read(post.content, post.category)}}</span><span class="comment"><a
+                            href="{{post.social}}" target="_blank">{{post.author}}</a></span></div>
+            </header>
+            <div class="blog-post-body">
+                <figure class="blog-banner">
+                    <img class="img-fluid" [defaultImage]="home.img" [lazyLoad]="post.imgPath" alt="image"
+                        style="max-height: 600px;">
+                    <figcaption *ngIf="post.imgOwner" class="mt-2 text-center image-caption">Image Credit: <a
+                            target="_blank"
+                            href="https://pixabay.com/users/{{post.imgOwner}}?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content={{post.imgId}}">
+                            {{post.imgOwner}}
+                        </a> from <a target="_blank"
+                            href="https://pixabay.com/?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content={{post.imgId}}">Pixabay</a>
+                    </figcaption>
+                </figure>
+                <p [style.text-align]="post.category.toLocaleLowerCase() === 'poem' ? 'center' : 'justify'">
+                    <markdown [data]="post.content"></markdown>
+                </p>
+            </div>
+            <div>
+                <app-social-share *ngIf="post" [imgPath]="post.imgPath" [desc]="decs" [shareUrl]="shareUrl">
+                </app-social-share>
+            </div>
+            <br>
+            <nav class="blog-nav nav nav-justified my-5">
+                <a class="nav-link-prev nav-item nav-link rounded-left" routerLink="/posts">All Posts</a>
+            </nav>
+            <div class="blog-comments-section">
+                <disqus *ngIf="post" [identifier]="post.id"></disqus>
+            </div>
+        </div>
+    </article>
+    <!-- <section class="promo-section theme-bg-light py-5 text-center">
+        <div class="container">
+            <h2 class="title">Promo Section Heading</h2>
+            <p>You can use this section to promote your side projects etc. Lorem ipsum dolor sit amet, consectetuer
+                adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. </p>
+            <figure class="promo-figure">
+                <a href="https://made4dev.com" target="_blank"><img class="img-fluid"
+                        src="assets/images/promo-banner.jpg" alt="image"></a>
+            </figure>
+        </div>
+    </section> -->
+
+    <footer class="footer text-center py-2 theme-bg-dark">
+        <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
+        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #e90e2b;"></i> by <a
+                href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+    </footer>
+
+</div>
