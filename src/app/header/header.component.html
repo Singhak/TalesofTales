@@ -1,46 +1,56 @@
 <header class="header text-center">
     <h1 class="blog-name pt-lg-4 mb-0"><a href="http://talesoftales.com" target="_blank"><i>{{usetName}}</i></a></h1>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark" style="padding-top: 1rem;">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation"
             aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div id="navigation" class="collapse navbar-collapse flex-column">
             <div class="profile-section pt-3 pt-lg-0">
-                <img class="profile-image mb-3 rounded-circle mx-auto" src="{{home.logo}}" alt="image">
+                <img class="profile-image mb-3 rounded-circle mx-auto" [defaultImage]="home.logo" [lazyLoad]="photUrl"
+                    alt="image">
                 <div class="bio mb-3">{{home.content}}<br></div>
                 <ul class="social-list list-inline mx-auto">
-                    <li class="list-inline-item"><a href="{{social.insta}}" target="_blank"><i
-                                class="fab fa-instagram fa-fw"></i></a>
+                    <li class="list-inline-item"><a href="{{social.insta}}" target="_blank">
+                            <i class="fab fa-instagram fa-fw"></i></a>
                     </li>
-                    <li class="list-inline-item"><a href="{{social.twitter}}" target="_blank"><i
-                                class="fab fa-twitter fa-fw"></i></a>
+                    <li class="list-inline-item"><a href="{{social.twitter}}" target="_blank">
+                            <i class="fab fa-twitter fa-fw"></i></a>
                     </li>
-                    <li class="list-inline-item"><a href="{{social.fbpage}}" target="_blank"><i
-                                class="fab fa-facebook-f fa-fw"></i></a>
+                    <li class="list-inline-item"><a href="{{social.fbpage}}" target="_blank">
+                            <i class="fab fa-facebook-f fa-fw"></i></a>
                     </li>
-                    <li class="list-inline-item"><a href="{{social.pinint}}" target="_blank"><i
-                                class="fab fa-pinterest fa-fw"></i></a>
+                    <li class="list-inline-item"><a href="{{social.pinint}}" target="_blank">
+                            <i class="fab fa-pinterest fa-fw"></i></a>
                     </li>
                 </ul>
                 <hr>
             </div>
             <ul class="navbar-nav flex-column text-left">
-                <li class="nav-item" data-toggle="collapse" data-target="#navigation">
-                    <a class="nav-link" routerLink="/posts"><i class="fas fa-home fa-fw mr-2"></i>Home <span
-                            class="sr-only"></span></a>
+                <li class="nav-item">
+                    <a class="nav-link" routerLink="/posts">
+                        <i class="fas fa-home fa-fw mr-2"></i>Home <span class="sr-only"></span>
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/about"><i class="fas fa-user fa-fw mr-2"></i>About Us</a>
+                    <a class="nav-link" routerLink="/about">
+                        <i class="fas fa-user fa-fw mr-2"></i>About Us</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" data-toggle="modal" data-target="#modalLoginForm"><i
-                            class="fas fa-envelope fa-fw mr-2"></i>Contact Us</a>
+                    <a class="nav-link" data-toggle="modal" data-target="#modalLoginForm" style="cursor: pointer;">
+                        <i class="fas fa-envelope fa-fw mr-2"></i>Contact Us</a>
+                </li>
+                <li class="nav-item" [hidden]="!isLogin">
+                    <a class="nav-link" style="cursor: pointer;" [routerLink]="[ '/posts/new' ]">
+                        <img class="mr-2" src="https://img.icons8.com/cute-clipart/64/000000/pencil.png"
+                            style="width:18px; vertical-align: baseline;">
+                        New Post</a>
                 </li>
             </ul>
             <div class="my-2">
-                <a [hidden]="isLogin" class="btn btn-primary" data-toggle="modal" data-target="#darkModalForm">LogIn</a>
-                <a [hidden]="!isLogin" class="btn btn-primary" (click)="onLogOut()">LogOut</a>
+                <a [hidden]="isLogin" class="btn btn-primary" data-toggle="modal" data-target="#darkModalForm"
+                    style="cursor: pointer;">LogIn</a>
+                <a [hidden]="!isLogin" class="btn btn-primary" (click)="onLogOut()" style="cursor: pointer;">Log Out</a>
             </div>
         </div>
     </nav>

@@ -7,6 +7,8 @@ import { PostService } from './../post-service.service';
 import { EditorInstance, EditorOption } from '../../../lib/angular-markdown-editor';
 import { Post } from '../post-service.service';
 import { isObservable } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
+import { take } from 'rxjs/operators';
 
 @Component({
   templateUrl: './post-edit.component.html',
@@ -21,11 +23,14 @@ export class PostEditComponent implements OnInit {
   templateForm: FormGroup;
   editorOptions: EditorOption;
   id: string;
+  uid: string;
+  name: string;
+  label = "New Post";
 
   @ViewChild('postform', { static: true }) editform: NgForm;
 
   constructor(private fb: FormBuilder, private markdownService: MarkdownService,
-    private route: ActivatedRoute, private postService: PostService) { }
+    private route: ActivatedRoute, private postService: PostService, private authService: AuthService) { }
 
   ngOnInit() {
     this.editorOptions = {
@@ -38,10 +43,12 @@ export class PostEditComponent implements OnInit {
     this.route.params.subscribe((params) => {
       // console.log(params['id']);
       if (params.id) {
+        this.label = 'Edit Post';
         const postObj = this.postService.getPost(params['id']);
         if (isObservable(postObj)) {
-          postObj.subscribe((post) => {
+          postObj.subscribe((post :Post) => {
             console.log(post);
+            this.uid = post.uid;
             this.buildForm(post as Post);
           });
         } else {
@@ -49,6 +56,14 @@ export class PostEditComponent implements OnInit {
         }
       }
     });
+
+    this.authService.userDetail.pipe(take(1)).subscribe(user => {
+      if(!this.id) {
+        this.uid = user.id;
+      }
+      this.name = user.name;
+    })
+
   }
   onSubmit(pf: NgForm) {
     console.log(pf);
@@ -58,19 +73,22 @@ export class PostEditComponent implements OnInit {
       content: this.markdownText,
       postDate: Date.now().toString(),
       category: pf.value.category,
-      author: pf.value.author,
-      imgPath: pf.value.imgpath ? pf.value.imgpath : ''
+      author: this.name,
+      imgPath: pf.value.imgpath ? pf.value.imgpath : '',
+      uid: this.uid
     }; // pf.value.title;
     this.postService.createPost(data);
-    this.editform.form.reset();
-    this.templateForm.reset();
+    // this.editform.form.reset();
+    // this.templateForm.reset();
   }
 
   buildForm(post: Post) {
     setTimeout(() => {
       this.editform.form.patchValue({
         title: post.title,
-        subtitle: post.subtitle
+        subtitle: post.subtitle,
+        imgPath:post.imgPath,
+        category:post.category
       });
       this.markdownText = post.content;
       this.templateForm = this.fb.group({

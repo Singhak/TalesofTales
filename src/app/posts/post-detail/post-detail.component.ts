@@ -15,11 +15,12 @@ export class PostDetailComponent implements OnInit {
   home = configuration.home;
   post: Post;
   shareUrl = '';
+  isError = false;
   decs = 'Checkout our latest poems and stories at our website. If you love it, Please share it.';
   constructor(private postService: PostService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-
+    this.shareUrl = window.location.href;
     this.route.params.subscribe((params) => {
       // console.log(params['id']);
       const postObj = this.postService.getPost(params['id']);
@@ -27,6 +28,9 @@ export class PostDetailComponent implements OnInit {
         postObj.subscribe((post) => {
           console.log(post);
           this.post = post as Post;
+        }, (err) => {
+          console.log(err);
+          this.isError = true;
         });
       } else {
         this.post = postObj as Post;

@@ -107,7 +107,8 @@ export class PostService {
             imgPath: post.imgPath ? post.imgPath : this.home.img,
             social: this.getAuthorSocial(post.author),
             imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner)
+            imgId: this.imgCreator('contentId', post.imgOwner),
+            uid: post.uid
           };
         })
       );
@@ -310,4 +311,5 @@ export interface Post {
   social?: string;
   imgOwner?: string;
   imgId?: string;
+  uid?: string;
 }

@@ -1,12 +1,8 @@
 import { MarkdownModule, MarkedOptions } from 'ngx-markdown';
-import { AngularFireAuthModule } from '@angular/fire/auth';
 import { HttpClientModule, HttpClientJsonpModule } from '@angular/common/http';
-import { AngularFireModule } from '@angular/fire';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { ShareButtonsModule } from '@ngx-share/buttons';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from './../../environments/environment';
 import { DisqusModule } from 'ngx-disqus';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -19,17 +15,15 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
 
 @NgModule({
 
-    imports: [LazyLoadImageModule,
+    imports: [
+        LazyLoadImageModule,
         DisqusModule.forRoot('talesoftales'),
         CommonModule,
-        AngularFireModule.initializeApp(environment.firebase),
-        AngularFirestoreModule,
         ShareButtonsModule,
         HttpClientModule,
         HttpClientJsonpModule,
         FormsModule,
         CommonModule,
-        AngularFireAuthModule,
         MarkdownModule.forRoot({
             markedOptions: {
               provide: MarkedOptions,
@@ -51,8 +45,6 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
         TrimTextPipe,
         DisqusModule,
         CommonModule,
-        AngularFirestoreModule,
-        AngularFireModule,
         LoadingComponent,
         SocialShareComponent,
         ShareButtonsModule,
@@ -60,7 +52,6 @@ import { ThankyouComponent } from './thankyou/thankyou.component';
         ReactiveFormsModule,
         SubscribeComponent,
         ThankyouComponent,
-        AngularFireAuthModule,
         MarkdownModule
     ],
     declarations: [TrimTextPipe, LoadingComponent, SocialShareComponent, SubscribeComponent, ThankyouComponent],

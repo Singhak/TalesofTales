@@ -1,8 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '~@ngx-share/button/themes/modern/modern-dark-theme';
-@import 'assets/css/theme-1.css';
-@import 'assets/css/bootstrap-social.css';
+/* @import 'assets/css/theme-1.css'; */
 @import "~bootstrap-markdown/css/bootstrap-markdown.min.css";
 
 @font-face {
@@ -72,4 +71,8 @@
 
 #ignismyModal .modal-header {
 	border: 0px;
+}
+
+.btn {
+	margin: 4px;
 }

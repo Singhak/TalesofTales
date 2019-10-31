@@ -1,4 +1,3 @@
-import { PostRoutingModule } from './posts/post.routing';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
@@ -10,9 +9,14 @@ import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
 import { ThemeModule } from './theme/theme.module';
 import { HeaderComponent } from './header/header.component';
-// import { PostModule } from './posts/post.module';
 import { SharedModule } from './shared/shared.modules';
 import { PostModule } from './posts/post.module';
+import { NotfoundComponent } from './notfound/notfound.component';
+import { ForbidenComponent } from './forbiden/forbiden.component';
+import { AngularFireModule } from '@angular/fire';
+import { environment } from 'projects/landing/src/environments/environment';
+import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 
 
 @NgModule({
@@ -21,6 +25,8 @@ import { PostModule } from './posts/post.module';
     ContactComponent,
     FooterComponent,
     HeaderComponent,
+    NotfoundComponent,
+    ForbidenComponent,
   ],
   imports: [
     BrowserModule,
@@ -29,7 +35,10 @@ import { PostModule } from './posts/post.module';
     AboutModule,
     AppRoutingModule,
     ThemeModule,
-    AuthModule
+    AuthModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
+    AngularFireAuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]

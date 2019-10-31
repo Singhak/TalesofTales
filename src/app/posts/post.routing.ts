@@ -4,6 +4,7 @@ import { PostsComponent } from './posts.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PostDetailComponent } from './post-detail/post-detail.component';
+import { AuthGuard } from '../auth/auth.guard';
 
 
 const routes: Routes = [
@@ -12,8 +13,8 @@ const routes: Routes = [
         component: PostsComponent,
         children: [
             { path: '', component: PostListComponent },
-            { path: 'new', component: PostEditComponent },
-            { path: ':id/edit', component: PostEditComponent },
+            { path: 'new', component: PostEditComponent, canActivate: [AuthGuard] },
+            { path: ':id/edit', component: PostEditComponent, canActivate: [AuthGuard] },
             { path: ':id', component: PostDetailComponent },
         ]
     }

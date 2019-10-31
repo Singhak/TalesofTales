@@ -14,7 +14,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class SocialShareComponent implements OnInit {
 
-  @Input() shareUrl = 'https://talesoftales.com';
+  @Input() shareUrl = 'http://talesoftales.com';
   @Input() desc;
   @Input() imgPath;
   hasTags = 'poem, painting, stories, arts, love, breakup, blog, shayri, gazal, tales, tale, story';

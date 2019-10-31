@@ -28,6 +28,7 @@
     "@ngx-share/button": "^7.1.4",
     "@ngx-share/buttons": "^7.1.4",
     "@ngx-share/core": "^7.1.4",
+    "bootstrap-markdown": "^2.10.0",
     "firebase": "^7.1.0",
     "ng-lazyload-image": "^6.1.0",
     "ngx-disqus": "^2.4.3",
