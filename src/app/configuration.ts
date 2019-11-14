@@ -16,7 +16,8 @@ export const configuration = {
         subheading: 'This is what WE do',
         img: '../assets/image/defaults/about-bg.jpg',
         info: ` We are bunch of people who try to bring out our inner thought in the form of art, stories or poem
-        to serve you. If you like our work please share it and spread the happiness.`,
+        to serve you. If you like our work please share it and spread the happiness.      
+        If you want to write for us. Please login write your content  at our platform.`,
         authors: [
             {
                 name: 'Divyanshu Mishra',

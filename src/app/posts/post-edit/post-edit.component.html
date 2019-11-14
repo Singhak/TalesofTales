@@ -5,32 +5,41 @@
                 <h3 style="margin-top:24px;">{{label}}</h3>
             </div>
             <div class="col-lg-6">
-                <button type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;">Save</button>
+                <button type="submit" class="btn btn-primary pull-right"
+                    style="float:right; margin-top:24px;">Save</button>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <span class="label">Title</span>
-                <input type="text" name="title" id="inputtitle" class="form-control" title="Post title" ngModel>
+                <input required type="text" name="title" id="inputtitle" class="form-control" title="Post title"
+                    ngModel>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <span class="label">Sub Title</span>
-                <input type="text" name="subtitle" id="inputtitle" class="form-control" title="Post sub title" ngModel>
+                <input type="text" name="subtitle" id="inputSubtitle" class="form-control" title="Post sub title" ngModel>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <span class="label">Category</span>
-                <input type="text" name="category" id="inputcategory" class="form-control" title="Post Category" ngModel>
+                <input required type="text" name="category" id="inputcategory" class="form-control"
+                    title="Post Category" ngModel>
+                <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
+                    story"</small>
+
             </div>
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <span class="label">Author</span>
-                <input type="text" name="author" id="inputauthor" class="form-control" title="Author" [(ngModel)]="name" readonly>
+                <input required type="text" name="author" id="inputauthor" class="form-control" title="Author"
+                    [(ngModel)]="name" readonly style="text-transform: capitalize">
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <span class="label">Image Path</span>
                 <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel>
+                <small id="imgHelp" class="form-text text-muted">Image should not be under copyright. Prefer to choose
+                    image form "https://pixabay.com/"</small>
             </div>
         </div>
     </form>

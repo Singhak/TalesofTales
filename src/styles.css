@@ -69,10 +69,14 @@
 	color: #fff;
 }
 
-#ignismyModal .modal-header {
+#ignismyModal.modal-header {
 	border: 0px;
 }
 
 .btn {
 	margin: 4px;
 }
+
+input.ng-invalid.ng-touched {
+	border: 1px solid red;
+  }

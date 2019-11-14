@@ -1,23 +1,36 @@
 <div style="text-align: center;">
-    <app-loading *ngIf="!post && !isError" ></app-loading>
-    
+    <app-loading *ngIf="!post && !isError"></app-loading>
+
     <div class="alert alert-danger" *ngIf="isError">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
         <strong>Error:</strong> Somthing gone wrong. <a [routerLink]="[ '/posts']">Go To Home</a>
     </div>
-    
+
 </div>
 <div>
     <article class="blog-post px-3 py-5 p-md-5" *ngIf="post">
         <div class="container">
-            <header class="blog-post-header">
-                <h2 class="title mb-2">{{post.title}}</h2>
-                <div class="meta mb-3"><span class="date">{{post.postDate | date}}</span><span
-                        class="time">{{minute_to_read(post.content, post.category)}}</span><span class="comment"><a
-                            href="{{post.social}}" target="_blank">{{post.author}}</a></span><span attr.data-disqus-identifier="{{post.id}}" class="comment"><a
-                            href="{{shareUrl}}#disqus_thread"> comments</a></span>
+
+            <div class="row">
+                <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+                    <header class="blog-post-header">
+                        <h2 class="title mb-2">{{post.title}}</h2>
+                        <div class="meta mb-3"><span class="date">{{post.postDate | date}}</span><span
+                                class="time">{{minute_to_read(post.content, post.category)}}</span><span
+                                class="comment"><a href="{{post.social}}"
+                                    target="_blank">{{post.author}}</a></span><span
+                                attr.data-disqus-identifier="{{post.id}}" class="comment"><a
+                                    href="{{shareUrl}}#disqus_thread"> comments</a></span>
+                        </div>
+                    </header>
                 </div>
-            </header>
+                <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                    <button *ngIf="isLogin" type="button" class="btn btn-primary" routerLink="edit" style="float: right;">Edit</button>
+                </div>
+            </div>
+
+
+
             <div class="blog-post-body">
                 <figure class="blog-banner">
                     <img class="img-fluid" [defaultImage]="home.img" [lazyLoad]="post.imgPath" alt="image"

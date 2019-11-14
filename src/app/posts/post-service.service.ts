@@ -127,9 +127,9 @@ export class PostService {
   createPost(data) {
     return new Promise<any>((resolve, reject) => {
       this.firestore
-        .collection('Posts')
+        .collection('modposts')
         .add(data)
-        .then(res => { }, err => reject(err));
+        .then(res => { resolve(res)}, err => reject(err));
     });
   }
 

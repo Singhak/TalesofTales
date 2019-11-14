@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ContactComponent } from './contact/contact.component';
 import { FooterComponent } from './footer/footer.component';
-import { ThemeModule } from './theme/theme.module';
 import { HeaderComponent } from './header/header.component';
 import { SharedModule } from './shared/shared.modules';
 import { PostModule } from './posts/post.module';
@@ -17,6 +16,8 @@ import { AngularFireModule } from '@angular/fire';
 import { environment } from 'projects/landing/src/environments/environment';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
+import { AngularFireMessagingModule } from '@angular/fire/messaging';
+import { MessagingService } from './messaging.service';
 
 
 @NgModule({
@@ -26,21 +27,21 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
     FooterComponent,
     HeaderComponent,
     NotfoundComponent,
-    ForbidenComponent,
+    ForbidenComponent
   ],
   imports: [
+    AngularFireModule.initializeApp(environment.firebase),
     BrowserModule,
     SharedModule,
     PostModule,
     AboutModule,
     AppRoutingModule,
-    ThemeModule,
     AuthModule,
-    AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AngularFireMessagingModule
   ],
-  providers: [],
+  providers: [MessagingService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

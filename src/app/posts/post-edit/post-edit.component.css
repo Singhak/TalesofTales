@@ -20,4 +20,12 @@
     max-height: 350px;
     overflow: auto;
   }
+
+  input.capital{
+    text-transform:capitalize;
+  }
+
+  .form-control {
+    height: 2rem;
+  }
   

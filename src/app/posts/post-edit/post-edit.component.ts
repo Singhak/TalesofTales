@@ -1,4 +1,4 @@
-import { Params, ActivatedRoute } from '@angular/router';
+import { Params, ActivatedRoute, Route, Router } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 
@@ -9,6 +9,7 @@ import { Post } from '../post-service.service';
 import { isObservable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { take } from 'rxjs/operators';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   templateUrl: './post-edit.component.html',
@@ -29,8 +30,8 @@ export class PostEditComponent implements OnInit {
 
   @ViewChild('postform', { static: true }) editform: NgForm;
 
-  constructor(private fb: FormBuilder, private markdownService: MarkdownService,
-    private route: ActivatedRoute, private postService: PostService, private authService: AuthService) { }
+  constructor(private fb: FormBuilder, private markdownService: MarkdownService, private router: Router,
+    private route: ActivatedRoute, private postService: PostService, private authService: AuthService, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.editorOptions = {
@@ -46,9 +47,9 @@ export class PostEditComponent implements OnInit {
         this.label = 'Edit Post';
         const postObj = this.postService.getPost(params['id']);
         if (isObservable(postObj)) {
-          postObj.subscribe((post :Post) => {
-            console.log(post);
+          postObj.subscribe((post: Post) => {
             this.uid = post.uid;
+            this.name = post.author;
             this.buildForm(post as Post);
           });
         } else {
@@ -58,15 +59,20 @@ export class PostEditComponent implements OnInit {
     });
 
     this.authService.userDetail.pipe(take(1)).subscribe(user => {
-      if(!this.id) {
+      if (!this.id) {
         this.uid = user.id;
+        this.name = user.name;
       }
-      this.name = user.name;
     })
 
   }
   onSubmit(pf: NgForm) {
-    console.log(pf);
+    if (!this.markdownText) {
+      this.toastrService.error('Please Enter content', 'Error', {
+        timeOut: 5000
+      });
+      return;
+    }
     const data: Post = {
       title: pf.value.title,
       subtitle: pf.value.subtitle,
@@ -77,18 +83,33 @@ export class PostEditComponent implements OnInit {
       imgPath: pf.value.imgpath ? pf.value.imgpath : '',
       uid: this.uid
     }; // pf.value.title;
-    this.postService.createPost(data);
+    this.postService.createPost(data).then((data) => {
+      let msg = 'Successfully posted/updated. Now it is under admin approval';
+      if (this.id) {
+        msg = "Successfully Upated."
+      }
+      this.toastrService.success(msg, 'Success', {
+        timeOut: 8000
+      });
+      this.router.navigate(['/posts']);
+    }).catch((err) => {
+      this.toastrService.error('Somthing gone wrong', 'Error', {
+        timeOut: 5000
+      });
+    });
     // this.editform.form.reset();
-    // this.templateForm.reset();
+    this.templateForm.reset();
   }
 
   buildForm(post: Post) {
+    this.name = post.author;
     setTimeout(() => {
       this.editform.form.patchValue({
         title: post.title,
         subtitle: post.subtitle,
-        imgPath:post.imgPath,
-        category:post.category
+        imgPath: post.imgPath,
+        category: post.category,
+        name: post.author
       });
       this.markdownText = post.content;
       this.templateForm = this.fb.group({

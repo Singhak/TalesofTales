@@ -35,4 +35,11 @@ export class UtilityFun {
     static isInternetConnected(): boolean {
         return navigator.onLine;
     }
+
+    static ValidateEmail(mail) {
+        if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)) {
+            return (true)
+        }
+        return (false)
+    }
 }
