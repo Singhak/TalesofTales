@@ -42,4 +42,21 @@ export class UtilityFun {
         }
         return (false)
     }
+
+    static fireStoreCode(code: String) {
+        switch (code) {
+            case "unauthenticated":
+                return "You have not valid authentication credentials for the operation";
+            case "permission-denied":
+                return "You have not permission to execute the specified operation";
+            case "already-exists":
+                return "Some document that we attempted to create already exists";
+            case "not-found":
+                return "Some requested document was not found.";
+            case "aborted":
+                return "The operation was aborted";
+            default:
+                return "Something has gone wrong";
+        }
+    }
 }

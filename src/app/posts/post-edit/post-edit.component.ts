@@ -10,28 +10,30 @@ import { isObservable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
+import { UtilityFun } from 'src/app/shared/utility';
 
 @Component({
   templateUrl: './post-edit.component.html',
   encapsulation: ViewEncapsulation.None,
   styleUrls: ['./post-edit.component.css']
 })
-// tslint:disable: align
+
 export class PostEditComponent implements OnInit {
   bsEditorInstance: EditorInstance;
   markdownText: string;
   showEditor = true;
   templateForm: FormGroup;
   editorOptions: EditorOption;
-  id: string;
-  uid: string;
+  id: string = null;
+  uid: string = null;
   name: string;
   label = "New Post";
 
   @ViewChild('postform', { static: true }) editform: NgForm;
 
   constructor(private fb: FormBuilder, private markdownService: MarkdownService, private router: Router,
-    private route: ActivatedRoute, private postService: PostService, private authService: AuthService, private toastrService: ToastrService) { }
+    private route: ActivatedRoute, private postService: PostService,
+    private authService: AuthService, private toastrService: ToastrService) { }
 
   ngOnInit() {
     this.editorOptions = {
@@ -42,8 +44,8 @@ export class PostEditComponent implements OnInit {
       parser: (val) => this.parse(val)
     };
     this.route.params.subscribe((params) => {
-      // console.log(params['id']);
       if (params.id) {
+        this.id = params.id;
         this.label = 'Edit Post';
         const postObj = this.postService.getPost(params['id']);
         if (isObservable(postObj)) {
@@ -53,6 +55,7 @@ export class PostEditComponent implements OnInit {
             this.buildForm(post as Post);
           });
         } else {
+          this.uid = postObj.uid;
           this.buildForm(postObj);
         }
       }
@@ -64,9 +67,9 @@ export class PostEditComponent implements OnInit {
         this.name = user.name;
       }
     })
-
   }
-  onSubmit(pf: NgForm) {
+
+  onSubmit(isDraft, pf: NgForm) {
     if (!this.markdownText) {
       this.toastrService.error('Please Enter content', 'Error', {
         timeOut: 5000
@@ -82,18 +85,24 @@ export class PostEditComponent implements OnInit {
       author: this.name,
       imgPath: pf.value.imgpath ? pf.value.imgpath : '',
       uid: this.uid
-    }; // pf.value.title;
-    this.postService.createPost(data).then((data) => {
-      let msg = 'Successfully posted/updated. Now it is under admin approval';
-      if (this.id) {
-        msg = "Successfully Upated."
-      }
+    };
+    let msg = 'Successfully posted/updated.';
+    let postPromise;
+    if (isDraft) {
+      msg = 'Draft successfully saved';
+      postPromise = this.postService.saveAs(data, this.id, 'modposts');
+    } else {
+      msg = "Post successfully published."
+      postPromise = this.postService.saveAs(data, this.id, 'Posts');
+    }
+    postPromise.then((data: any) => {
       this.toastrService.success(msg, 'Success', {
         timeOut: 8000
       });
       this.router.navigate(['/posts']);
-    }).catch((err) => {
-      this.toastrService.error('Somthing gone wrong', 'Error', {
+    }).catch((err: any) => {
+      const code = UtilityFun.fireStoreCode(err.code)
+      this.toastrService.error(code, 'Error', {
         timeOut: 5000
       });
     });

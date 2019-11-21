@@ -47,19 +47,7 @@ export class PostService {
       .snapshotChanges().subscribe((res) => {
         this.posts = res.map((rawPost) => {
           const post = rawPost.payload.doc.data() as Post;
-          return {
-            id: rawPost.payload.doc.id,
-            content: post.content,
-            subtitle: post.subtitle,
-            postDate: post.postDate,
-            title: post.title,
-            author: post.author,
-            category: post.category,
-            imgPath: post.imgPath ? post.imgPath : this.home.img,
-            social: this.getAuthorSocial(post.author),
-            imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner)
-          };
+          return this.postObject(post, rawPost.payload.doc.id);
         });
         this.postSubscription.next(this.posts);
       });
@@ -97,19 +85,7 @@ export class PostService {
         take(1),
         map((rawdata) => {
           post = rawdata.payload.data() as Post;
-          return {
-            content: post.content,
-            subtitle: post.subtitle,
-            postDate: post.postDate,
-            title: post.title,
-            author: post.author,
-            category: post.category,
-            imgPath: post.imgPath ? post.imgPath : this.home.img,
-            social: this.getAuthorSocial(post.author),
-            imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner),
-            uid: post.uid
-          };
+          return this.postObject(post, id);
         })
       );
     } else {
@@ -117,20 +93,22 @@ export class PostService {
     }
   }
 
-  updatePost(data) {
-    return this.firestore
-      .collection('Posts')
-      .doc(data.payload.doc.id)
-      .set({ completed: true }, { merge: true });
-  }
-
-  createPost(data) {
-    return new Promise<any>((resolve, reject) => {
-      this.firestore
-        .collection('modposts')
-        .add(data)
-        .then(res => { resolve(res)}, err => reject(err));
-    });
+  saveAs(data: Post, id: string, collection: string) {
+    if (id) {
+      return new Promise<any>((resolve, reject) => {
+        this.firestore
+          .collection(collection)
+          .doc(id)
+          .set(data, { merge: true })
+          .then(res => { resolve(res) }, err => reject(err));
+      });
+    } else
+      return new Promise<any>((resolve, reject) => {
+        this.firestore
+          .collection(collection)
+          .add(data)
+          .then(res => { resolve(res) }, err => reject(err));
+      });
   }
 
   loadPosts() {
@@ -148,19 +126,7 @@ export class PostService {
 
         this.posts = response.map((rawPost) => {
           const post = rawPost.payload.doc.data() as Post;
-          return {
-            id: rawPost.payload.doc.id,
-            content: post.content,
-            subtitle: post.subtitle,
-            postDate: post.postDate,
-            title: post.title,
-            author: post.author,
-            category: post.category,
-            imgPath: post.imgPath ? post.imgPath : this.home.img,
-            social: this.getAuthorSocial(post.author),
-            imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner)
-          };
+          return this.postObject(post, rawPost.payload.doc.id);
         });
         this.postSubscription.next(this.posts.slice());
         // Initialize values
@@ -205,19 +171,7 @@ export class PostService {
 
         this.posts = response.docs.map((rawPost) => {
           const post = rawPost.data() as Post;
-          return {
-            id: rawPost.id,
-            content: post.content,
-            subtitle: post.subtitle,
-            postDate: post.postDate,
-            title: post.title,
-            author: post.author,
-            category: post.category,
-            imgPath: post.imgPath ? post.imgPath : this.home.img,
-            social: this.getAuthorSocial(post.author),
-            imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner)
-          };
+          return this.postObject(post, rawPost.id);
         });
         // Maintaing page no.
         this.pagination_clicked_count--;
@@ -252,19 +206,7 @@ export class PostService {
         this.lastInResponse = response.docs[response.docs.length - 1];
         this.posts = response.docs.map((rawPost) => {
           const post = rawPost.data() as Post;
-          return {
-            id: rawPost.id,
-            content: post.content,
-            subtitle: post.subtitle,
-            postDate: post.postDate,
-            title: post.title,
-            author: post.author,
-            category: post.category,
-            imgPath: post.imgPath ? post.imgPath : this.home.img,
-            social: this.getAuthorSocial(post.author),
-            imgOwner: this.imgCreator('owner', post.imgOwner),
-            imgId: this.imgCreator('contentId', post.imgOwner)
-          };
+          return this.postObject(post, rawPost.id);
         });
         this.pagination_clicked_count++;
         this.push_prev_startAt(this.firstInResponse);
@@ -297,6 +239,23 @@ export class PostService {
     return this.prev_strt_at[this.pagination_clicked_count - 1];
   }
 
+  postObject(post: Post, id: string): Post {
+    return {
+      id: id,
+      content: post.content,
+      subtitle: post.subtitle,
+      postDate: post.postDate,
+      title: post.title,
+      author: post.author,
+      category: post.category,
+      imgPath: post.imgPath ? post.imgPath : this.home.img,
+      social: this.getAuthorSocial(post.author),
+      imgOwner: this.imgCreator('owner', post.imgOwner),
+      imgId: this.imgCreator('contentId', post.imgOwner),
+      uid: post.uid
+    };
+  }
+
 }
 
 export interface Post {
@@ -311,5 +270,5 @@ export interface Post {
   social?: string;
   imgOwner?: string;
   imgId?: string;
-  uid?: string;
+  uid: string;
 }
