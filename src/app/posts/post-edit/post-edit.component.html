@@ -1,3 +1,17 @@
+<section class="cta-section theme-bg-light py-3">
+    <div class="container">
+        <div><span class="heading">I</span><span class="subtitle">f you are a story or poem write, have fantastic
+                writing skills
+                and love to
+                create heart-touching content, I would be happy to share your articles with my readers.</span></div>
+    </div>
+    <div class="container">
+        <p class="intro"><b>POST SUBMISSION GUIDELINES</b> :</p>
+        <p>1. All blog posts must have original content.</p>
+        <p>2. The language of post should not be 18+ i.e. It should not be vulgar</p>
+        <p>3. The post must link to the sources used in the writing (images, quotes, and data).</p>
+    </div>
+</section>
 <div class="container">
     <form #postform="ngForm">
         <div class="row">
@@ -5,10 +19,10 @@
                 <h3 style="margin-top:24px;">{{label}}</h3>
             </div>
             <div class="col-lg-6">
-                <button type="submit" class="btn btn-primary pull-right"
-                    style="float:right; margin-top:24px;" (click)="onSubmit(true, postform)" name="draft">Save as Draft</button>
-                <button type="submit" class="btn btn-primary pull-right"
-                    style="float:right; margin-top:24px;" (click)="onSubmit(false, postform)" name="publish">Publish</button>
+                <button type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                    (click)="onSubmit(true, postform)" name="draft">Save as Draft</button>
+                <button type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                    (click)="onSubmit(false, postform)" name="publish">Publish</button>
             </div>
         </div>
         <hr>
@@ -20,7 +34,8 @@
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <span class="label">Sub Title</span>
-                <input type="text" name="subtitle" id="inputSubtitle" class="form-control" title="Post sub title" ngModel>
+                <input type="text" name="subtitle" id="inputSubtitle" class="form-control" title="Post sub title"
+                    ngModel>
             </div>
         </div>
         <div class="row">
