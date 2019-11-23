@@ -6,14 +6,12 @@ import { ShareButtonsModule } from '@ngx-share/buttons';
 import { DisqusModule } from 'ngx-disqus';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ToastrModule, ToastNoAnimation, ToastNoAnimationModule } from 'ngx-toastr';
+import { ToastNoAnimationModule } from 'ngx-toastr';
 
 import { SocialShareComponent } from './social-share/social-share.component';
 import { LoadingComponent } from './loading-component/loading.component';
 import { TrimTextPipe } from '../shared/filter.pipe';
 import { SubscribeComponent } from './subscribe/subscribe.component';
-import { ThankyouComponent } from './thankyou/thankyou.component';
-import { DropdownDirective } from './dropdown.directive';
 
 @NgModule({
 
@@ -54,11 +52,9 @@ import { DropdownDirective } from './dropdown.directive';
     FormsModule,
     ReactiveFormsModule,
     SubscribeComponent,
-    ThankyouComponent,
     MarkdownModule,
-    ToastNoAnimationModule,
-    DropdownDirective
+    ToastNoAnimationModule
   ],
-  declarations: [TrimTextPipe, DropdownDirective, LoadingComponent, SocialShareComponent, SubscribeComponent, ThankyouComponent],
+  declarations: [TrimTextPipe, LoadingComponent, SocialShareComponent, SubscribeComponent],
 })
 export class SharedModule { }

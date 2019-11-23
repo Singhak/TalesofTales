@@ -2,6 +2,7 @@ import { UtilityFun } from './../shared/utility';
 import { ContactService } from './contact-service.service';
 import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-contact',
@@ -14,7 +15,7 @@ export class ContactComponent implements OnInit {
   // @Input() show = false;
   // @Input() customClass = '';
   // @Input() closeCallback = () => (false);
-  constructor(private contactService: ContactService) {
+  constructor(private contactService: ContactService, private toastService: ToastrService) {
     this.submit = UtilityFun.isInternetConnected();
   }
 
@@ -26,6 +27,7 @@ export class ContactComponent implements OnInit {
     if (UtilityFun.isInternetConnected()) {
       this.contactService.sendUserMsg(contactFrm.value).then((resolve) => {
         if (resolve.id) {
+          this.toastService.success('Thanks for writing us', 'Thank You', { timeOut: 5000 });
           this.submit = true;
           setTimeout(() => {
             this.submit = false;
@@ -35,7 +37,7 @@ export class ContactComponent implements OnInit {
       contactFrm.reset();
       // this.closeCallback();
     } else {
-      alert('No internet connection');
+      this.toastService.info('Check your internet connection', 'No Internet', { timeOut: 5000 });
     }
   }
 

@@ -2,7 +2,7 @@
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
-        <form #contact="ngForm" (ngSubmit)="onSubmit(contact)">
+        <form #contact="ngForm">
             <div class="modal-content">
                 <div class="modal-header text-center">
                     <h4 class="modal-title w-100 font-weight-bold">Write to us</h4>
@@ -36,7 +36,7 @@
                 </div>
                 <div class="modal-footer d-flex justify-content-center">
                     <button [disabled]="!contact.form.dirty || (contact.form.status === 'INVALID')" type="submit"
-                        class="btn btn-lg btn-primary" data-dismiss="modal" data-toggle="modal" href="#ignismyModal">Send</button>
+                        class="btn btn-lg btn-primary" data-dismiss="modal" (click)="onSubmit(contact)">Send</button>
                 </div>
             </div>
         </form>
