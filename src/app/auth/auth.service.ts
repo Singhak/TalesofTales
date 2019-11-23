@@ -5,6 +5,11 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import * as firebase from 'firebase/app';
 import { User } from './user.model';
 import { ToastrService } from 'ngx-toastr';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { configuration } from '../configuration';
+import { take, map } from 'rxjs/operators';
+import { post } from 'selenium-webdriver/http';
+import { Post } from '../posts/post-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +19,8 @@ export class AuthService {
   private userDetails: firebase.User = null;
   private tokenExpirationTimer: any;
   public userDetail = new BehaviorSubject<User>(null);
-  constructor(private firebaseAuth: AngularFireAuth, private router: Router, private toastrService: ToastrService) {
+  constructor(private firebaseAuth: AngularFireAuth, private router: Router,
+    private toastrService: ToastrService, private firestore: AngularFirestore) {
     this.autoLogin();
   }
 
@@ -115,6 +121,7 @@ export class AuthService {
     const expirationDate = new Date(expiresIn + +expiresIn.toString().substr(0, 10))
     const user = new User(id, name, email, photoUrl, token, expirationDate);
     this.userDetail.next(user);
+    this.saveUser({ uid: id, name: name, email: email, photoUrl: photoUrl }, id);
     // this.autoLogout(expiresIn + +expiresIn.toString().substr(0, 10));
     localStorage.setItem('user', JSON.stringify(user));
   }
@@ -137,68 +144,38 @@ export class AuthService {
     if (loadedUser.token) {
       this.userDetail.next(loadedUser);
       const expirationDuration =
-        new Date(userData._tokenExpirationDate).getTime() -
-        new Date().getTime();
+        new Date(userData._tokenExpirationDate).getTime()
+      new Date().getTime();
       console.log(expirationDuration);
       // this.autoLogout(expirationDuration);
     }
   }
 
-  /***
-   * 
-// Step 1.
-// User tries to sign in to Facebook.
-auth.signInWithPopup(new firebase.auth.FacebookAuthProvider()).catch(function(error) {
-  // An error happened.
-  if (error.code === 'auth/account-exists-with-different-credential') {
-    // Step 2.
-    // User's email already exists.
-    // The pending Facebook credential.
-    var pendingCred = error.credential;
-    // The provider account's email address.
-    var email = error.email;
-    // Get sign-in methods for this email.
-    auth.fetchSignInMethodsForEmail(email).then(function(methods) {
-      // Step 3.
-      // If the user has several sign-in methods,
-      // the first method in the list will be the "recommended" method to use.
-      if (methods[0] === 'password') {
-        // Asks the user their password.
-        // In real scenario, you should handle this asynchronously.
-        var password = promptUserForPassword(); // TODO: implement promptUserForPassword.
-        auth.signInWithEmailAndPassword(email, password).then(function(user) {
-          // Step 4a.
-          return user.linkWithCredential(pendingCred);
-        }).then(function() {
-          // Facebook account successfully linked to the existing Firebase user.
-          goToApp();
-        });
-        return;
-      }
-      // All the other cases are external providers.
-      // Construct provider object for that provider.
-      // TODO: implement getProviderForProviderId.
-      var provider = getProviderForProviderId(methods[0]);
-      // At this point, you should let the user know that they already has an account
-      // but with a different provider, and let them validate the fact they want to
-      // sign in with this provider.
-      // Sign in to provider. Note: browsers usually block popup triggered asynchronously,
-      // so in real scenario you should ask the user to click on a "continue" button
-      // that will trigger the signInWithPopup.
-      auth.signInWithPopup(provider).then(function(result) {
-        // Remember that the user may have signed in with an account that has a different email
-        // address than the first one. This can happen as Firebase doesn't control the provider's
-        // sign in flow and the user is free to login using whichever account they own.
-        // Step 4b.
-        // Link to Facebook credential.
-        // As we have access to the pending credential, we can directly call the link method.
-        result.user.linkAndRetrieveDataWithCredential(pendingCred).then(function(usercred) {
-          // Facebook account successfully linked to the existing Firebase user.
-          goToApp();
-        });
+  saveUser(data, id: string) {
+    if (id) {
+      return new Promise<any>((resolve, reject) => {
+        this.firestore
+          .collection('users')
+          .doc(id)
+          .set(data, { merge: true })
+          .then(res => { resolve(res) }, err => reject(err));
       });
-    });
+    } else
+      return new Promise<any>((resolve, reject) => {
+        this.firestore
+          .collection('users')
+          .add(data)
+          .then(res => { resolve(res) }, err => reject(err));
+      });
   }
-});
-   */
+
+  getUserData(id: string) {
+    return this.firestore.collection('users').doc(id).snapshotChanges().pipe(
+      take(1),
+      map((rawdata) => {
+        let post = rawdata.payload.data();
+        return post;
+      })
+    );
+  }
 }

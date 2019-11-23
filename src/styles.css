@@ -74,9 +74,20 @@
 }
 
 .btn {
-	margin: 4px;
+	margin: 8px;
 }
 
 input.ng-invalid.ng-touched {
 	border: 1px solid red;
   }
+  .dialog {
+	  border: 2px solid;
+  }
+
+body.dark-mode label {
+	color: whitesmoke;
+}
+
+body.dark-mode .modal-content {
+	background-color: #151e29
+}

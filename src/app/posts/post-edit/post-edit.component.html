@@ -41,8 +41,12 @@
         <div class="row">
             <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
                 <span class="label">Category</span>
-                <input required type="text" name="category" id="inputcategory" class="form-control"
-                    title="Post Category" ngModel>
+                <select id="select" class="browser-default form-control" name="category" ngModel >
+                    <option value ="poem" selected>Poem</option>
+                    <option value="story">Story</option>
+                </select>
+                <!-- <input required type="text" name="category" id="inputcategory" class="form-control"
+                    title="Post Category" ngModel> -->
                 <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
                     story"</small>
 

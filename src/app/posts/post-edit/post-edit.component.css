@@ -29,3 +29,7 @@
     height: 2rem;
   }
   
+  #select {
+    padding-bottom: 0px;
+    padding-top: 0px;
+  }

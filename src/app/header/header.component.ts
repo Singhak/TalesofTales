@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   isLogin = false;
   showModal = false;
   photUrl: string;
+  uid = "";
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -25,6 +26,7 @@ export class HeaderComponent implements OnInit {
           this.isLogin = true;
           this.usetName = user.name;
           this.photUrl = user.photoURL;
+          this.uid = user.id;
         } else {
           this.isLogin = false;
           this.usetName = 'Tales of Tales';
