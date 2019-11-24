@@ -1,11 +1,11 @@
 <section class="cta-section theme-bg-light py-3">
     <div class="container">
-        <div><span class="heading">I</span><span class="subtitle">f you are a story or poem write, have fantastic
+        <div class="greet"><span class="heading">I</span><span class="subtitle">f you are a story or poem write, have
+                fantastic
                 writing skills
                 and love to
-                create heart-touching content, I would be happy to share your articles with my readers.</span></div>
-    </div>
-    <div class="container">
+                create heart-touching content,<br>I would be happy to share your articles with my readers.</span></div>
+        <br>
         <p class="intro"><b>POST SUBMISSION GUIDELINES</b> :</p>
         <p>1. All blog posts must have original content.</p>
         <p>2. The language of post should not be 18+ i.e. It should not be vulgar</p>
@@ -19,48 +19,46 @@
                 <h3 style="margin-top:24px;">{{label}}</h3>
             </div>
             <div class="col-lg-6">
-                <button type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                <button  [disabled]="!postform.form.dirty || (postform.form.status === 'INVALID')" type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
                     (click)="onSubmit(true, postform)" name="draft">Save as Draft</button>
-                <button type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                <button [disabled]="!postform.form.dirty || (postform.form.status === 'INVALID')" type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
                     (click)="onSubmit(false, postform)" name="publish">Publish</button>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <span class="label">Title</span>
+                <span class="label">Title</span><span style="color: red">*</span>
                 <input required type="text" name="title" id="inputtitle" class="form-control" title="Post title"
                     ngModel>
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-                <span class="label">Sub Title</span>
-                <input type="text" name="subtitle" id="inputSubtitle" class="form-control" title="Post sub title"
-                    ngModel>
+                <span class="label">Category</span><span style="color: red">*</span>
+                <select id="select" class="browser-default form-control" name="category" ngModel required>
+                    <option value="poem">Poem</option>
+                    <option value="story">Story</option>
+                </select>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                <span class="label">Category</span>
-                <select id="select" class="browser-default form-control" name="category" ngModel >
-                    <option value ="poem" selected>Poem</option>
-                    <option value="story">Story</option>
-                </select>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
                 <!-- <input required type="text" name="category" id="inputcategory" class="form-control"
                     title="Post Category" ngModel> -->
-                <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
-                    story"</small>
+                <!-- <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
+                    story"</small> -->
 
-            </div>
-            <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+
                 <span class="label">Author</span>
                 <input required type="text" name="author" id="inputauthor" class="form-control" title="Author"
                     [(ngModel)]="name" readonly style="text-transform: capitalize">
             </div>
             <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
                 <span class="label">Image Path</span>
-                <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel>
-                <small id="imgHelp" class="form-text text-muted">Image should not be under copyright. Prefer to choose
-                    image form "https://pixabay.com/"</small>
+                <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel placeholder="https://cdn.pixabay.com/photo/2019/11/19/12/29/emotions-4637323_960_720.jpg"
+                    title="Image should not be under copyright. Prefer to choose image form 'https://pixabay.com/'">
+                <!-- <small id="imgHelp" class="form-text text-muted">Image should not be under copyright. Prefer to choose
+                    image form "https://pixabay.com/"</small> -->
             </div>
         </div>
     </form>

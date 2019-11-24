@@ -2,8 +2,8 @@
 
 @import '~@ngx-share/button/themes/modern/modern-dark-theme';
 /* @import 'assets/css/theme-1.css'; */
-@import "~bootstrap-markdown/css/bootstrap-markdown.min.css";
 
+@import "~bootstrap-markdown/css/bootstrap-markdown.min.css";
 @font-face {
 	font-family: "Telegraphem";
 	src: url("./assets/fonts/Telegraphem.otf");
@@ -79,10 +79,11 @@
 
 input.ng-invalid.ng-touched {
 	border: 1px solid red;
-  }
-  .dialog {
-	  border: 2px solid;
-  }
+}
+
+.dialog {
+	border: 2px solid;
+}
 
 body.dark-mode label {
 	color: whitesmoke;
@@ -90,4 +91,8 @@ body.dark-mode label {
 
 body.dark-mode .modal-content {
 	background-color: #151e29
+}
+
+.form-control {
+	height: 2rem;
 }

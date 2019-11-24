@@ -1,4 +1,4 @@
-import { Params, ActivatedRoute, Route, Router } from '@angular/router';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, ViewEncapsulation, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 
@@ -31,13 +31,14 @@ export class PostEditComponent implements OnInit {
 
   @ViewChild('postform', { static: true }) editform: NgForm;
 
-  constructor(private fb: FormBuilder, private markdownService: MarkdownService, private router: Router,
-    private route: ActivatedRoute, private postService: PostService,
-    private authService: AuthService, private toastrService: ToastrService) { }
+  constructor(private fb: FormBuilder, private markdownService: MarkdownService,
+    private route: ActivatedRoute, private postService: PostService, private router: Router,
+    private authService: AuthService, private toastrService: ToastrService) {
+  }
 
   ngOnInit() {
     this.editorOptions = {
-      autofocus: false,
+      autofocus: true,
       iconlibrary: 'fa',
       savable: false,
       onShow: (e) => this.bsEditorInstance = e,
@@ -78,7 +79,6 @@ export class PostEditComponent implements OnInit {
     }
     const data: Post = {
       title: pf.value.title,
-      subtitle: pf.value.subtitle,
       content: this.markdownText,
       postDate: Date.now().toString(),
       category: pf.value.category,
@@ -115,9 +115,8 @@ export class PostEditComponent implements OnInit {
     setTimeout(() => {
       this.editform.form.patchValue({
         title: post.title,
-        subtitle: post.subtitle,
         imgPath: post.imgPath,
-        category: post.category,
+        category: post.category.toLowerCase(),
         name: post.author
       });
       this.markdownText = post.content;

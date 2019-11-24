@@ -10,7 +10,6 @@
 <div>
     <article class="blog-post px-3 py-5 p-md-5" *ngIf="post">
         <div class="container">
-
             <div class="row">
                 <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
                     <header class="blog-post-header">
@@ -25,16 +24,15 @@
                     </header>
                 </div>
                 <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
-                    <button *ngIf="isLogin" type="button" class="btn btn-primary" routerLink="edit" style="float: right;">Edit</button>
+                    <button *ngIf="isLogin" type="button" class="btn btn-primary" routerLink="edit"
+                        style="float: right;">Edit</button>
                 </div>
             </div>
-
-
 
             <div class="blog-post-body">
                 <figure class="blog-banner">
                     <img class="img-fluid" [defaultImage]="home.img" [lazyLoad]="post.imgPath" alt="image"
-                        style="max-height: 600px;">
+                        style="max-height: 400px;">
                     <figcaption *ngIf="post.imgOwner" class="mt-2 text-center image-caption">Image Credit: <a
                             target="_blank"
                             href="https://pixabay.com/users/{{post.imgOwner}}?utm_source=link-attribution&amp;utm_medium=referral&amp;utm_campaign=image&amp;utm_content={{post.imgId}}">
@@ -74,8 +72,8 @@
 
     <footer class="footer text-center py-2 theme-bg-dark">
         <!--/* This template is released under the Creative Commons Attribution 3.0 License. Please keep the attribution link below when using for your own project. Thank you for your support. :) If you'd like to use the template without the attribution, you can buy the commercial license via our website: themes.3rdwavemedia.com */-->
-        <small class="copyright">Designed with <i class="fas fa-heart" style="color: #e90e2b;"></i> by <a
-                href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying Riley</a> for developers</small>
+        <small class="copyright">Theme Designed by <a href="http://themes.3rdwavemedia.com" target="_blank">Xiaoying
+                Riley</a></small>
     </footer>
 
 </div>

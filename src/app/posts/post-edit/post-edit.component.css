@@ -25,11 +25,21 @@
     text-transform:capitalize;
   }
 
-  .form-control {
-    height: 2rem;
-  }
-  
   #select {
     padding-bottom: 0px;
     padding-top: 0px;
+  }
+
+  .container p{
+    font-size: 15px;
+    margin-bottom: auto;
+  }
+
+  .greet {
+    font-size: 18px;
+    font-style: italic;
+  }
+
+  angular-markdown-editor .btn {
+margin: auto;
   }

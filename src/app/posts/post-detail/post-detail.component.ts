@@ -2,11 +2,9 @@ import { configuration } from './../../configuration';
 import { UtilityFun } from './../../shared/utility';
 import { Post, PostService } from './../post-service.service';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { isObservable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { post } from 'selenium-webdriver/http';
-import { isLong } from 'long';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-post-detail',
@@ -21,8 +19,12 @@ export class PostDetailComponent implements OnInit {
   isError = false;
   isLogin = false;
   userId = null;
+
   decs = 'Checkout our latest poems and stories at our website. If you love it, Please share it.';
-  constructor(private postService: PostService, private route: ActivatedRoute, private authService: AuthService) { }
+
+  constructor(private postService: PostService, private route: ActivatedRoute,
+    private authService: AuthService) {
+  }
 
   ngOnInit() {
     this.shareUrl = window.location.href;
@@ -48,7 +50,7 @@ export class PostDetailComponent implements OnInit {
       if (user && user.id) {
         this.userId = user.id
       }
-      if(this.post && this.userId === this.post.uid){
+      if (this.post && this.userId === this.post.uid) {
         this.isLogin = true;
       }
     });
