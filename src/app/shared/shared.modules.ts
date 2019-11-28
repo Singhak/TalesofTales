@@ -7,7 +7,6 @@ import { DisqusModule } from 'ngx-disqus';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ToastNoAnimationModule } from 'ngx-toastr';
-
 import { SocialShareComponent } from './social-share/social-share.component';
 import { LoadingComponent } from './loading-component/loading.component';
 import { TrimTextPipe } from '../shared/filter.pipe';
@@ -53,7 +52,7 @@ import { SubscribeComponent } from './subscribe/subscribe.component';
     ReactiveFormsModule,
     SubscribeComponent,
     MarkdownModule,
-    ToastNoAnimationModule
+    ToastNoAnimationModule,
   ],
   declarations: [TrimTextPipe, LoadingComponent, SocialShareComponent, SubscribeComponent],
 })
