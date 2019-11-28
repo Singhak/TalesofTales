@@ -19,43 +19,54 @@
                 <h3 style="margin-top:24px;">{{label}}</h3>
             </div>
             <div class="col-lg-6">
-                <button  [disabled]="!postform.form.dirty || (postform.form.status === 'INVALID')" type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                <button *ngIf="isDraft === 'true'" type="button" class="btn btn-danger pull-right"
+                    style="float:right; margin-top:24px;" (click)="onDelete(id, 'modposts')"
+                    name="publish">Delete</button>
+                <button [disabled]="(postform.form.status === 'INVALID')" type="submit"
+                    class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
                     (click)="onSubmit(true, postform)" name="draft">Save as Draft</button>
-                <button [disabled]="!postform.form.dirty || (postform.form.status === 'INVALID')" type="submit" class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
+                <button [disabled]="(postform.form.status === 'INVALID')" type="submit"
+                    class="btn btn-primary pull-right" style="float:right; margin-top:24px;"
                     (click)="onSubmit(false, postform)" name="publish">Publish</button>
+
             </div>
         </div>
         <hr>
         <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <span class="label">Title</span><span style="color: red">*</span>
                 <input required type="text" name="title" id="inputtitle" class="form-control" title="Post title"
                     ngModel>
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <span class="label">Category</span><span style="color: red">*</span>
                 <select id="select" class="browser-default form-control" name="category" ngModel required>
                     <option value="poem">Poem</option>
                     <option value="story">Story</option>
+                    <option value="random">Random</option>
                 </select>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
-
-                <!-- <input required type="text" name="category" id="inputcategory" class="form-control"
-                    title="Post Category" ngModel> -->
-                <!-- <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
-                    story"</small> -->
-
-
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
                 <span class="label">Author</span>
                 <input required type="text" name="author" id="inputauthor" class="form-control" title="Author"
                     [(ngModel)]="name" readonly style="text-transform: capitalize">
             </div>
-            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+        </div>
+        <div class="row">
+            <!-- <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+
+                <!- <input required type="text" name="category" id="inputcategory" class="form-control"
+                    title="Post Category" ngModel> -->
+            <!-- <small id="catlHelp" class="form-text text-muted">"Poem" or "Tale" or "Fiction" or "Scribbled
+                    story"</small> --
+
+
+                
+            </div> -->
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                 <span class="label">Image Path</span>
-                <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel placeholder="https://cdn.pixabay.com/photo/2019/11/19/12/29/emotions-4637323_960_720.jpg"
+                <input type="text" name="imgpath" id="inputimgpath" class="form-control" title="Image Path" ngModel
+                    placeholder="https://cdn.pixabay.com/photo/2019/11/19/12/29/emotions-4637323_960_720.jpg"
                     title="Image should not be under copyright. Prefer to choose image form 'https://pixabay.com/'">
                 <!-- <small id="imgHelp" class="form-text text-muted">Image should not be under copyright. Prefer to choose
                     image form "https://pixabay.com/"</small> -->

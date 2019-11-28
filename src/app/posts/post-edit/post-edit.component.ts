@@ -27,6 +27,7 @@ export class PostEditComponent implements OnInit {
   id: string = null;
   uid: string = null;
   name: string;
+  isDraft: string;
   label = "New Post";
 
   @ViewChild('postform', { static: true }) editform: NgForm;
@@ -34,9 +35,6 @@ export class PostEditComponent implements OnInit {
   constructor(private fb: FormBuilder, private markdownService: MarkdownService,
     private route: ActivatedRoute, private postService: PostService, private router: Router,
     private authService: AuthService, private toastrService: ToastrService) {
-  }
-
-  ngOnInit() {
     this.editorOptions = {
       autofocus: true,
       iconlibrary: 'fa',
@@ -44,23 +42,34 @@ export class PostEditComponent implements OnInit {
       onShow: (e) => this.bsEditorInstance = e,
       parser: (val) => this.parse(val)
     };
-    this.route.params.subscribe((params) => {
-      if (params.id) {
-        this.id = params.id;
+  }
+
+  ngOnInit() {
+    let postObj: any;
+    this.isDraft = this.route.snapshot.queryParamMap.get('isDraft')
+    this.id = this.route.snapshot.params['id'];
+    if (this.isDraft === 'true') {
+      postObj = this.postService.getPostById(this.id, 'modposts');
+    } else {
+      if (this.id) {
         this.label = 'Edit Post';
-        const postObj = this.postService.getPost(params['id']);
-        if (isObservable(postObj)) {
-          postObj.subscribe((post: Post) => {
-            this.uid = post.uid;
-            this.name = post.author;
-            this.buildForm(post as Post);
-          });
-        } else {
+        postObj = this.postService.getPost(this.id);
+        if (!isObservable(postObj)) {
           this.uid = postObj.uid;
           this.buildForm(postObj);
         }
       }
-    });
+    }
+
+    if (isObservable(postObj)) {
+      postObj.subscribe((post: any) => {
+        this.uid = post.uid;
+        this.name = post.author;
+        this.buildForm(post as Post);
+      }, (err) => {
+        console.log(err);
+      });
+    }
 
     this.authService.userDetail.pipe(take(1)).subscribe(user => {
       if (!this.id) {
@@ -68,6 +77,19 @@ export class PostEditComponent implements OnInit {
         this.name = user.name;
       }
     })
+  }
+
+  onDelete(id: string, collection: string, ask = true) {
+    var result = confirm("Want to delete?");
+    if (result && ask) {
+      this.postService.deletePost(id, collection).then(() => {
+        this.router.navigate(['/posts']);
+      }).catch((err) => {
+        console.log(err);
+      });
+    } else if(!ask) {
+      this.postService.deletePost(id, collection)
+    }
   }
 
   onSubmit(isDraft, pf: NgForm) {
@@ -99,6 +121,9 @@ export class PostEditComponent implements OnInit {
       this.toastrService.success(msg, 'Success', {
         timeOut: 8000
       });
+      if (this.isDraft === 'true') {
+        this.onDelete(this.id, 'modposts', false);
+      }
       this.router.navigate(['/posts']);
     }).catch((err: any) => {
       const code = UtilityFun.fireStoreCode(err.code)
@@ -117,7 +142,8 @@ export class PostEditComponent implements OnInit {
         title: post.title,
         imgPath: post.imgPath,
         category: post.category.toLowerCase(),
-        name: post.author
+        name: post.author,
+        imgpath: post.imgPath
       });
       this.markdownText = post.content;
       this.templateForm = this.fb.group({
