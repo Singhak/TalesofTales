@@ -1,0 +1,59 @@
+<div class="alert alert-danger" *ngIf="!user && !isloading">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true"></button>
+    <strong>Error:</strong> User Data not found. <a [routerLink]="[ '/posts']">Go To Home</a>
+</div>
+<div *ngIf="user || isloading">
+    <section class="about-me-section p-3 p-lg-5 theme-bg-light">
+        <div class="container container-single-col">
+            <div class="profile-teaser media flex-column flex-lg-row">
+                <app-loading *ngIf="isloading"></app-loading>
+                <div *ngIf="user" class="media-body">
+                    <div style="display: flex;">
+                        <h2 class="name font-weight-bold mb-1">{{user.name}}</h2>
+                        <li class="list-inline-item" style="cursor: pointer;" data-toggle="modal"
+                            data-target="#profile">
+                            <span style="font-size: 26px; vertical-align: sub">&#9997;</span>Edit
+                        </li>
+                    </div>
+
+                    <ul class="social-list list-inline mx-auto">
+                        <li class="list-inline-item"><a href="{{user.insta}}" target="_blank">
+                                <i class="fab fa-instagram fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="{{user.twitter}}" target="_blank">
+                                <i class="fab fa-twitter fa-fw"></i></a>
+                        </li>
+                        <li class="list-inline-item"><a href="{{user.fb}}" target="_blank">
+                                <i class="fab fa-facebook-f fa-fw"></i></a>
+                        </li>
+                    </ul>
+
+                    <p class="bio mb-4">{{user.bio}}
+                    </p>
+                    <div class="mb-4">
+
+                    </div>
+                </div>
+                <img *ngIf="user" class="profile-image mb-3 mb-lg-0 ml-lg-5 mr-md-0"
+                    [defaultImage]="'/assets/images/defaults/logo.jpg'" [lazyLoad]="user.photoUrl" alt="">
+            </div>
+        </div>
+    </section>
+    <section class="container">
+        <div>
+            <nav class="blog-nav nav nav-justified nav-tabs">
+                <div class="nav-link-prev nav-item nav-link" routerLink="posts" routerLinkActive="active">Published
+                    Posts
+                </div>
+                <div class="nav-link-prev nav-item nav-link" routerLink="draft" routerLinkActive="active">Drafted posts
+                </div>
+            </nav>
+        </div>
+        <div class="plist">
+            <router-outlet></router-outlet>
+        </div>
+        <div style="height: 50%; overflow: auto;">
+            <app-profile-edit></app-profile-edit>
+        </div>
+    </section>
+</div>

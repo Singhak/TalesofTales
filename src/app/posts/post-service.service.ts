@@ -4,6 +4,7 @@ import { take, map } from 'rxjs/operators';
 import { Post } from './post-service.service';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { post } from 'selenium-webdriver/http';
 
 @Injectable({
   providedIn: 'root'
@@ -66,31 +67,51 @@ export class PostService {
     return '';
   }
 
-  private getAuthorSocial(name: string) {
-    const social =
-      configuration.aboutus.authors.find((n) => {
-        return n.name === name;
-      });
-    return social ? social.social : '';
+  private getAuthorProfile(uid:string) {
+    return "/profile/"+uid+"/posts";
   }
 
   getPost(id: string) {
-    // 'InEPh4pYEw2oFgxz37U9'
     let post: any;
     if (this.posts.length) {
       post = this.posts.filter((e) => e.id === id)[0];
     }
     if (!post) {
-      return this.firestore.collection('Posts').doc(id).snapshotChanges().pipe(
-        take(1),
-        map((rawdata) => {
-          post = rawdata.payload.data() as Post;
-          return this.postObject(post, id);
-        })
-      );
+      return this.getPostById(id, 'Posts')
     } else {
       return post;
     }
+  }
+
+  getPostById(id: string, collection: string) {
+
+    // return this.firestore.collection(collection).doc(id).get();
+    return this.firestore.collection(collection).doc(id).snapshotChanges().pipe(
+      take(1),
+      map((rawdata) => {
+        let post = rawdata.payload.data() as Post;
+        return this.postObject(post, id);
+      })
+    );
+  }
+
+  getPostOfUser(uid: string, collection: string) {
+    return this.firestore.collection(collection, ref => ref
+      .limit(5)
+      .orderBy('postDate', 'desc')
+      .where("uid", "==", uid))
+      .snapshotChanges().pipe(
+        map((rawdatas) => {
+          return rawdatas.map((rawdata) => {
+            let id = rawdata.payload.doc.id;
+            return { id, ...rawdata.payload.doc.data() }
+          })
+        })
+      )
+  }
+
+  deletePost(id:string, collection:string){
+    return this.firestore.collection(collection).doc(id).delete();
   }
 
   saveAs(data: Post, id: string, collection: string) {
@@ -140,21 +161,6 @@ export class PostService {
       });
   }
 
-  // Add item in Collection
-  // addItem() {
-  //   this.firestore.collection('People').add(
-  //     {
-  //       id: this.firestore.createId(),
-  //       name: this.nameValue,
-  //       place: this.placeValue,
-  //       timestamp: new Date().getTime()
-  //     }
-  //   ).then(response => {
-  //     this.nameValue = this.placeValue = '';
-  //   }).catch(error => {
-  //     console.log(error);
-  //   });
-  // }
 
   // Show previous set
   prevPage() {
@@ -249,7 +255,7 @@ export class PostService {
       author: post.author,
       category: post.category,
       imgPath: post.imgPath ? post.imgPath : this.home.img,
-      social: this.getAuthorSocial(post.author),
+      social: this.getAuthorProfile(post.uid),
       imgOwner: this.imgCreator('owner', post.imgOwner),
       imgId: this.imgCreator('contentId', post.imgOwner),
       uid: post.uid

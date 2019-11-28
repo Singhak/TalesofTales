@@ -1,0 +1,23 @@
+.profile-image {
+    max-width: 200px;
+    border-radius: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.plist {
+    height: 40vh;
+    overflow-y: auto;
+    scrollbar-color: rgba(0,0,0,0.2) #3B7EEB;
+    scrollbar-width: thin
+}
+
+.plist::-webkit-scrollbar {
+    width: 6px;
+    background-color: whitesmoke
+}
+
+.plist::-webkit-scrollbar-thumb {
+    background-color:black;
+    border-radius: .5rem
+}

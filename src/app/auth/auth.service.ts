@@ -171,7 +171,6 @@ export class AuthService {
 
   getUserData(id: string) {
     return this.firestore.collection('users').doc(id).snapshotChanges().pipe(
-      take(1),
       map((rawdata) => {
         let post = rawdata.payload.data();
         return post;
