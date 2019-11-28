@@ -8,7 +8,6 @@ import { ProfileComponent } from './profile/profile.component';
 const routes: Routes = [
   { path: '', redirectTo: '/posts', pathMatch: 'full' },
   { path: 'forbidden', component: ForbidenComponent },
-  { path: 'profile', component: ProfileComponent },
   { path: '**', component: NotfoundComponent }
 ];
 
