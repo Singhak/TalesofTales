@@ -20,6 +20,7 @@ import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './messaging.service';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -27,10 +28,11 @@ import { MessagingService } from './messaging.service';
     FooterComponent,
     HeaderComponent,
     NotfoundComponent,
-    ForbidenComponent
+    ForbidenComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule.enablePersistence(),
     BrowserModule,
     SharedModule,
     PostModule,
