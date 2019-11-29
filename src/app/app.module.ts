@@ -18,6 +18,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFireMessagingModule } from '@angular/fire/messaging';
 import { MessagingService } from './messaging.service';
+import { TermsOfUsesComponent } from './terms-of-uses/terms-of-uses.component';
 
 
 
@@ -29,6 +30,7 @@ import { MessagingService } from './messaging.service';
     HeaderComponent,
     NotfoundComponent,
     ForbidenComponent,
+    TermsOfUsesComponent,
   ],
   imports: [
     AngularFireModule.initializeApp(environment.firebase),

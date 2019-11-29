@@ -96,3 +96,7 @@ body.dark-mode .modal-content {
 .form-control {
 	height: 2rem;
 }
+
+.alert {
+	border-radius: 0px;
+}

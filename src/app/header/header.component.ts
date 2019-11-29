@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
   showModal = false;
   photUrl: string;
   uid = "";
+  year: number;
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
@@ -34,6 +35,7 @@ export class HeaderComponent implements OnInit {
         }
       }
     );
+    this.year = new Date().getFullYear();
   }
 
   onLogOut() {

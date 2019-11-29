@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, RouteConfigLoadEnd, NavigationEnd, Router } from '@angular/router';
 import { AuthService } from '../auth/auth.service';
 import { PostService } from '../posts/post-service.service';
+import { SeoService } from '../seo.service';
+import { UtilityFun } from '../shared/utility';
 
 @Component({
   selector: 'app-profile',
@@ -16,8 +18,8 @@ export class ProfileComponent implements OnInit {
   posts = [];
   isDraft: boolean;
   isloading = true;
-  constructor(private router: ActivatedRoute, private authSevice: AuthService, private postService: PostService) {
-  }
+  constructor(private router: ActivatedRoute, private authSevice:
+    AuthService, private postService: PostService, private seoService:SeoService) { }
 
   ngOnInit() {
     this.router.params.subscribe((params) => {
@@ -28,6 +30,7 @@ export class ProfileComponent implements OnInit {
           if (user && this.userId && this.user.uid === this.userId) {
             this.isEdit = true;
             this.isloading = false;
+            this.setMetaTag()
           } else {
             this.isloading = false;
           }
@@ -43,5 +46,12 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  setMetaTag() {
+    this.seoService.generateTags({
+      title: this.user.name,
+      url: window.location.href,
+      description: UtilityFun.trimContent(this.user.bio, 26)
+    })
+  }
 
 }

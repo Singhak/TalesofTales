@@ -56,6 +56,6 @@ export const configuration = {
         fbpage: 'https://www.facebook.com/talesoftales02',
         insta: 'https://www.instagram.com/talesoftales02',
         pinint: 'https://in.pinterest.com/aliendeveloper/',
-        twitter: 'https://twitter.com/aad_apps/'
+        twitter: 'https://twitter.com/talesoftales02/'
     }
 };
