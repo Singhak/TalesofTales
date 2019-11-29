@@ -8,6 +8,7 @@
                     routerLink="{{post.social}}">{{post.author}}
                 </a></span></div>
         <div class="intro">{{post.content | trimText}}</div>
-        <a class="more-link" routerLink="{{post.id}}">Read more &rarr;</a>
+        <a class="more-link" routerLink="{{route}}"
+            [queryParams]="queryParams">{{(this.isDraft === false || this.isDraft) ? '&#9997;Edit' :'Read more &rarr;' }}</a>
     </div>
 </div>

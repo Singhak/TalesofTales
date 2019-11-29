@@ -4,7 +4,8 @@ import { Post, PostService } from './../post-service.service';
 import { Component, OnInit } from '@angular/core';
 import { isObservable } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { SeoService } from 'src/app/seo.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -23,7 +24,7 @@ export class PostDetailComponent implements OnInit {
   decs = 'Checkout our latest poems and stories at our website. If you love it, Please share it.';
 
   constructor(private postService: PostService, private route: ActivatedRoute,
-    private authService: AuthService) {
+    private authService: AuthService, private router: Router, private seoService: SeoService) {
   }
 
   ngOnInit() {
@@ -36,12 +37,14 @@ export class PostDetailComponent implements OnInit {
           console.log(post);
           this.post = post as Post;
           if (this.userId === this.post.uid) { this.isLogin = true; }
+          this.setMetaTags()
         }, (err) => {
           console.log(err);
           this.isError = true;
         });
       } else {
         this.post = postObj as Post;
+        this.setMetaTags()
         if (this.userId === this.post.uid) { this.isLogin = true; }
       }
     });
@@ -54,6 +57,15 @@ export class PostDetailComponent implements OnInit {
         this.isLogin = true;
       }
     });
+  }
+
+  setMetaTags() {
+    this.seoService.generateTags({
+      title: this.post.title,
+      image: this.post.imgPath,
+      url: window.location.href,
+      description: UtilityFun.trimContent(this.post.content, 26)
+    })
   }
 
   minute_to_read(content: string, category?: string) {

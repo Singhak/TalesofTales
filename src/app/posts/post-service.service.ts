@@ -67,8 +67,8 @@ export class PostService {
     return '';
   }
 
-  private getAuthorProfile(uid:string) {
-    return "/profile/"+uid+"/posts";
+  private getAuthorProfile(uid: string) {
+    return "/profile/" + uid + "/posts";
   }
 
   getPost(id: string) {
@@ -97,7 +97,7 @@ export class PostService {
 
   getPostOfUser(uid: string, collection: string) {
     return this.firestore.collection(collection, ref => ref
-      .limit(5)
+      .limit(10)
       .orderBy('postDate', 'desc')
       .where("uid", "==", uid))
       .snapshotChanges().pipe(
@@ -110,7 +110,7 @@ export class PostService {
       )
   }
 
-  deletePost(id:string, collection:string){
+  deletePost(id: string, collection: string) {
     return this.firestore.collection(collection).doc(id).delete();
   }
 
@@ -254,7 +254,7 @@ export class PostService {
       title: post.title,
       author: post.author,
       category: post.category,
-      imgPath: post.imgPath ? post.imgPath : this.home.img,
+      imgPath: post.imgPath ? post.imgPath : 'https://cdn.pixabay.com/photo/2016/01/09/18/28/old-1130743_960_720.jpg',
       social: this.getAuthorProfile(post.uid),
       imgOwner: this.imgCreator('owner', post.imgOwner),
       imgId: this.imgCreator('contentId', post.imgOwner),

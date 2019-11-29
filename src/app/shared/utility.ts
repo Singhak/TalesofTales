@@ -59,4 +59,11 @@ export class UtilityFun {
                 return "Something has gone wrong";
         }
     }
+
+    static trimContent(content: string, len: number) {
+        content = UtilityFun.remove_markeddown(content)
+        const wordList = content.split(' ');
+        const filterList = wordList.filter(Boolean);
+        return filterList.slice(0, len).join(' ').trim() + '...';
+    }
 }

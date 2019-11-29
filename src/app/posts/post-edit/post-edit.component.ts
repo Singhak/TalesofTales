@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 import { take } from 'rxjs/operators';
 import { ToastrService } from 'ngx-toastr';
 import { UtilityFun } from 'src/app/shared/utility';
+import { Location } from '@angular/common';
 
 @Component({
   templateUrl: './post-edit.component.html',
@@ -34,7 +35,7 @@ export class PostEditComponent implements OnInit {
 
   constructor(private fb: FormBuilder, private markdownService: MarkdownService,
     private route: ActivatedRoute, private postService: PostService, private router: Router,
-    private authService: AuthService, private toastrService: ToastrService) {
+    private authService: AuthService, private toastrService: ToastrService, private location:Location) {
     this.editorOptions = {
       autofocus: true,
       iconlibrary: 'fa',
@@ -80,10 +81,11 @@ export class PostEditComponent implements OnInit {
   }
 
   onDelete(id: string, collection: string, ask = true) {
-    var result = confirm("Want to delete?");
+    var result = confirm("Do you Want to delete this draft?");
     if (result && ask) {
       this.postService.deletePost(id, collection).then(() => {
-        this.router.navigate(['/posts']);
+        // this.router.navigate(['/posts']);
+        this.location.back();
       }).catch((err) => {
         console.log(err);
       });
@@ -105,7 +107,7 @@ export class PostEditComponent implements OnInit {
       postDate: Date.now().toString(),
       category: pf.value.category,
       author: this.name,
-      imgPath: pf.value.imgpath ? pf.value.imgpath : '',
+      imgPath: pf.value.imgpath ? pf.value.imgpath : 'https://cdn.pixabay.com/photo/2016/01/09/18/28/old-1130743_960_720.jpg',
       uid: this.uid
     };
     let msg = 'Successfully posted/updated.';
@@ -124,15 +126,14 @@ export class PostEditComponent implements OnInit {
       if (this.isDraft === 'true') {
         this.onDelete(this.id, 'modposts', false);
       }
-      this.router.navigate(['/posts']);
+      // this.router.navigate(['/posts']);
+      this.location.back();
     }).catch((err: any) => {
       const code = UtilityFun.fireStoreCode(err.code)
       this.toastrService.error(code, 'Error', {
         timeOut: 5000
       });
     });
-    // this.editform.form.reset();
-    this.templateForm.reset();
   }
 
   buildForm(post: Post) {
