@@ -16,8 +16,7 @@
                         <h2 class="title mb-2">{{post.title}}</h2>
                         <div class="meta mb-3"><span class="date">{{post.postDate | date}}</span><span
                                 class="time">{{minute_to_read(post.content, post.category)}}</span><span
-                                class="comment"><a href="{{post.social}}"
-                                    target="_blank">{{post.author}}</a></span><span
+                                class="comment"><a routerLink="{{post.social}}">{{post.author}}</a></span><span
                                 attr.data-disqus-identifier="{{post.id}}" class="comment"><a
                                     href="{{shareUrl}}#disqus_thread"> comments</a></span>
                         </div>
@@ -46,7 +45,7 @@
                 </p>
             </div>
             <div>
-                <app-social-share *ngIf="post" [imgPath]="post.imgPath" [desc]="decs" [shareUrl]="shareUrl">
+                <app-social-share *ngIf="post" [imgPath]="post.imgPath" [desc]="decs" [shareUrl]="shareUrl" [title]="post.title">
                 </app-social-share>
             </div>
             <br>

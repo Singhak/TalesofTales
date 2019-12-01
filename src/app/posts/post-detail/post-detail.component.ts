@@ -60,11 +60,12 @@ export class PostDetailComponent implements OnInit {
   }
 
   setMetaTags() {
+    this.decs = UtilityFun.trimContent(this.post.content, 26);
     this.seoService.generateTags({
       title: this.post.title,
       image: this.post.imgPath,
-      url: window.location.href,
-      description: UtilityFun.trimContent(this.post.content, 26)
+      url: this.shareUrl,
+      description: this.decs
     })
   }
 

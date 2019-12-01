@@ -28,26 +28,49 @@
             </div>
             <ul class="navbar-nav flex-column text-left">
                 <li class="nav-item">
-                    <a class="nav-link" routerLink="/posts">
-                        <i class="fas fa-home fa-fw mr-2"></i>Home<span class="sr-only"></span>
+                    <a class="nav-link d-none d-sm-block" routerLink="/posts">
+                        <i class="fas fa-home fa-fw mr-2"></i>Home
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="/about">
-                        <i class="fas fa-user fa-fw mr-2"></i>About Us</a>
+                <li class="nav-item" data-toggle="collapse" data-target="#navigation">
+                    <a class="nav-link d-block d-sm-none" routerLink="/posts">
+                        <i class="fas fa-home fa-fw mr-2"></i>Home
+                    </a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link d-none d-sm-block" routerLink="/about">
+                        <i class="fas fa-user fa-fw mr-2"></i>About Us<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item" data-toggle="collapse" data-target="#navigation">
+                    <a class="nav-link d-block d-sm-none" routerLink="/about">
+                        <i class="fas fa-user fa-fw mr-2"></i>About Us<span class="sr-only"></span></a>
+                </li>
+                
                 <li class="nav-item">
                     <a class="nav-link" data-toggle="modal" data-target="#modalLoginForm" style="cursor: pointer;">
-                        <i class="fas fa-envelope fa-fw mr-2"></i>Contact Us</a>
+                        <i class="fas fa-envelope fa-fw mr-2"></i>Contact Us<span class="sr-only"></span></a>
                 </li>
-                <li class="nav-item" *ngIf="isLogin">
-                    <a class="nav-link" style="cursor: pointer;" [routerLink]="[ '/posts/new' ]">
+
+                <li class="nav-item">
+                    <a class="nav-link d-none d-sm-block" style="cursor: pointer;" [routerLink]="[ '/posts/new' ]">
                         <img class="mr-2" src="https://img.icons8.com/cute-clipart/64/000000/pencil.png"
-                            style="width:18px; vertical-align: baseline;">Submit Post</a>
+                            style="width:18px; vertical-align: baseline;">Submit Post<span class="sr-only"></span></a>
+
                 </li>
+                <li class="nav-item" data-toggle="collapse" data-target="#navigation">
+                    <a class="nav-link d-block d-sm-none" [routerLink]="[ '/posts/new' ]" style="cursor: pointer;">
+                        <img class="mr-2" src="https://img.icons8.com/cute-clipart/64/000000/pencil.png"
+                            style="width:18px; vertical-align: baseline;">Submit Post<span class="sr-only"></span></a>
+                </li>
+
                 <li class="nav-item" *ngIf="isLogin">
-                    <a class="nav-link" [routerLink]="[ '/profile', uid,'posts' ]">
-                        <i class="fas fa-user fa-fw mr-2"></i>Profile</a>
+                    <a class="nav-link d-none d-sm-block" [routerLink]="[ '/profile', uid,'posts' ]">
+                        <i class="fas fa-user fa-fw mr-2"></i>Profile<span class="sr-only"></span></a>
+                </li>
+                <li class="nav-item" *ngIf="isLogin" data-toggle="collapse" data-target="#navigation">
+                    <a class="nav-link d-block d-sm-none" [routerLink]="[ '/profile', uid,'posts' ]">
+                        <i class="fas fa-user fa-fw mr-2"></i>Profile<span class="sr-only"></span></a>
                 </li>
             </ul>
             <div class="my-2">

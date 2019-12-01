@@ -10,7 +10,7 @@
                 <div *ngIf="user" class="media-body">
                     <div style="display: flex;">
                         <h2 class="name font-weight-bold mb-1">{{user.name}}</h2>
-                        <li class="list-inline-item" style="cursor: pointer;" data-toggle="modal"
+                        <li *ngIf="isEdit" class="list-inline-item" style="cursor: pointer;" data-toggle="modal"
                             data-target="#profile">
                             <span style="font-size: 26px; vertical-align: sub">&#9997;</span>Edit
                         </li>
@@ -52,8 +52,6 @@
         <div class="plist">
             <router-outlet></router-outlet>
         </div>
-        <div style="height: 50%; overflow: auto;">
-            <app-profile-edit></app-profile-edit>
-        </div>
+        <app-profile-edit></app-profile-edit>
     </section>
 </div>

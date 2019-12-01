@@ -6,8 +6,8 @@
 }
 
 .plist {
-    height: 40vh;
-    overflow-y: auto;
+    height: 39vh;
+    overflow-y: scroll;
     scrollbar-color: rgba(0,0,0,0.2) #3B7EEB;
     scrollbar-width: thin
 }

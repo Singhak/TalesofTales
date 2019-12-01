@@ -13,13 +13,13 @@ import { UtilityFun } from '../shared/utility';
 export class ProfileComponent implements OnInit {
 
   user: any;
-  isEdit = true;
+  isEdit = false;
   userId = null;
   posts = [];
   isDraft: boolean;
   isloading = true;
   constructor(private router: ActivatedRoute, private authSevice:
-    AuthService, private postService: PostService, private seoService:SeoService) { }
+    AuthService, private postService: PostService, private seoService: SeoService) { }
 
   ngOnInit() {
     this.router.params.subscribe((params) => {
@@ -37,9 +37,11 @@ export class ProfileComponent implements OnInit {
         })
 
         this.authSevice.userDetail.subscribe((user) => {
-          this.userId = user.id
-          if (this.user && this.user.uid === user.id) {
-            this.isEdit = true;
+          if (user) {
+            this.userId = user.id
+            if (this.user && this.user.uid === user.id) {
+              this.isEdit = true;
+            }
           }
         })
       }

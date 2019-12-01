@@ -48,7 +48,7 @@ export class UtilityFun {
             case "unauthenticated":
                 return "You have not valid authentication credentials for the operation";
             case "permission-denied":
-                return "You have not permission to execute the specified operation";
+                return "You have not permission to execute/see the specified operation/data";
             case "already-exists":
                 return "Some document that we attempted to create already exists";
             case "not-found":
@@ -62,6 +62,7 @@ export class UtilityFun {
 
     static trimContent(content: string, len: number) {
         content = UtilityFun.remove_markeddown(content)
+        content =content.replace(/(\r\n|\n|\r)/gm, " ");;
         const wordList = content.split(' ');
         const filterList = wordList.filter(Boolean);
         return filterList.slice(0, len).join(' ').trim() + '...';

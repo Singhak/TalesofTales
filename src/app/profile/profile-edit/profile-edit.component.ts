@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { UtilityFun } from 'src/app/shared/utility';
 
 @Component({
   selector: 'app-profile-edit',
@@ -13,15 +14,15 @@ export class ProfileEditComponent implements OnInit {
 
   id: string;
   @ViewChild('profile', { static: true }) editform: NgForm;
-  
-  constructor(private authService: AuthService, private router: ActivatedRoute, private toastService:ToastrService) { }
+
+  constructor(private authService: AuthService, private router: ActivatedRoute, private toastService: ToastrService) { }
 
   ngOnInit() {
     this.router.params.subscribe((params) => {
       if (params.id) {
         this.id = params.id;
         this.authService.getUserData(this.id).subscribe((profile) => {
-          if(profile){
+          if (profile) {
             this.setDefaults(profile);
           }
         })
@@ -29,7 +30,7 @@ export class ProfileEditComponent implements OnInit {
     });
   }
 
-  setDefaults(profile:any) {
+  setDefaults(profile: any) {
     setTimeout(() => {
       this.editform.form.patchValue({
         fb: profile.fb,
@@ -42,9 +43,12 @@ export class ProfileEditComponent implements OnInit {
 
   onSubmit(pf: NgForm) {
     if (this.id) {
-      this.authService.saveUser(pf.value, this.id)
-    } else {
-      this.toastService.warning('You are not autherise person for this opertion', 'Warning', {timeOut:5000})
+      this.authService.saveUser(pf.value, this.id).then((res) => {
+        this.toastService.success('Your profile successfully updated', 'Success', { timeOut: 5000 })
+      }).catch((err) => {
+        let code = UtilityFun.fireStoreCode(err.code);
+        this.toastService.warning(code, 'Warning', { timeOut: 5000 })
+      })
     }
   }
 
