@@ -15,7 +15,6 @@ export class AppComponent {
   constructor(private messagingService: MessagingService, private toastService: ToastrService, private router: Router) {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
-        console.log(event.urlAfterRedirects);
         gtag('config', 'UA-153193382-1', { 'page_path': event.urlAfterRedirects });
       }
     })
